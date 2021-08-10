@@ -16,7 +16,7 @@ namespace CFXS {
         }
 
         constexpr uint32_t ToNetworkOrder() const {
-            return SwapByteOrder32(m_Value);
+            return HTONL(m_Value);
         }
 
         constexpr uint32_t GetValue() const {
