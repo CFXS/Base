@@ -1,8 +1,9 @@
-// - Rihards Veips 07/15/21
+// [CFXS] //
 #pragma once
 
 #include <array>
 #include <CFXS/Base/ByteOrder.hpp>
+#include <CFXS/Base/Debug.hpp>
 
 namespace CFXS {
 
@@ -57,12 +58,22 @@ namespace CFXS {
             return m_Value != m_Value;
         }
 
-        constexpr uint8_t& operator[](uint8_t index) {
+        inline uint8_t& operator[](uint8_t index) {
+            CFXS_ASSERT(index < 4, "Index (%u) out of range", index);
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
             return m_Bytes[index];
+#else
+            return m_Bytes[3 - index];
+#endif
         }
 
-        constexpr const uint8_t& operator[](uint8_t index) const {
+        inline const uint8_t& operator[](uint8_t index) const {
+            CFXS_ASSERT(index < 4, "Index (%u) out of range", index);
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
             return m_Bytes[index];
+#else
+            return m_Bytes[3 - index];
+#endif
         }
 
     private:

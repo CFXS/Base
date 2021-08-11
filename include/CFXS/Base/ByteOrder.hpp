@@ -1,6 +1,5 @@
+// [CFXS] //
 #pragma once
-
-// TODO: system endian check
 
 namespace CFXS {
 
@@ -13,19 +12,35 @@ namespace CFXS {
     }
 
     constexpr inline uint16_t HTONS(uint16_t input) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         return SwapByteOrder16(input);
+#else
+        return input;
+#endif
     }
 
     constexpr inline uint16_t NTOHS(uint16_t input) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         return SwapByteOrder16(input);
+#else
+        return input;
+#endif
     }
 
     constexpr inline uint32_t HTONL(uint32_t input) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         return SwapByteOrder32(input);
+#else
+        return input;
+#endif
     }
 
     constexpr inline uint32_t NTOHL(uint32_t input) {
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
         return SwapByteOrder32(input);
+#else
+        return input;
+#endif
     }
 
 } // namespace CFXS
