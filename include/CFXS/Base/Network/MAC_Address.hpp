@@ -1,5 +1,6 @@
+// ---------------------------------------------------------------------
 // CFXS Framework Base Module <https://github.com/CFXS/CFXS-Base>
-// Copyright (C) 2021 - CFXS / Rihards Veips
+// Copyright (C) 2021 | CFXS / Rihards Veips
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -8,11 +9,12 @@
 // 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
+// ---------------------------------------------------------------------
 // [CFXS] //
 #pragma once
 
@@ -22,6 +24,8 @@ namespace CFXS {
 
     class MAC_Address {
     public:
+        constexpr MAC_Address() : m_Data({0, 0, 0, 0, 0, 0}) {
+        }
         constexpr MAC_Address(uint8_t b) : m_Data({b, b, b, b, b, b}) {
         }
         constexpr MAC_Address(const uint8_t data[6]) : m_Data({data[0], data[1], data[2], data[3], data[4], data[5]}) {
@@ -53,6 +57,11 @@ namespace CFXS {
 
         inline const uint8_t& operator[](uint8_t index) const {
             return m_Data[index];
+        }
+
+        inline MAC_Address& operator=(const MAC_Address& other) {
+            m_Data = other.m_Data;
+            return *this;
         }
 
     private:

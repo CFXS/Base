@@ -1,5 +1,6 @@
+// ---------------------------------------------------------------------
 // CFXS Framework Base Module <https://github.com/CFXS/CFXS-Base>
-// Copyright (C) 2021 - CFXS / Rihards Veips
+// Copyright (C) 2021 | CFXS / Rihards Veips
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -8,18 +9,15 @@
 // 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 // 
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
+// ---------------------------------------------------------------------
 // [CFXS] //
 #pragma once
 
-#ifdef CFXS_DEBUG_TERMINAL_USE_COLORS
-    #define __DEBUG_TERMINAL_RESET_COLOR__ __ANSI_WHITE__
-    #define __DEBUG_TERMINAL_ERROR_COLOR__ __ANSI_RED__
-#else
-    #define __DEBUG_TERMINAL_RESET_COLOR__ ""
-    #define __DEBUG_TERMINAL_ERROR_COLOR__
-#endif
+#define __DEBUG_TERMINAL_RESET_COLOR__   __ANSI_WHITE__
+#define __DEBUG_TERMINAL_WARNING_COLOR__ __ANSI_YELLOW__
+#define __DEBUG_TERMINAL_ERROR_COLOR__   __ANSI_RED__
