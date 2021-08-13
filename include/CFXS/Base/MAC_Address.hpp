@@ -19,6 +19,7 @@
 #pragma once
 
 #include <array>
+#include <cstdio>
 
 namespace CFXS {
 
@@ -62,6 +63,11 @@ namespace CFXS {
         inline MAC_Address& operator=(const MAC_Address& other) {
             m_Data = other.m_Data;
             return *this;
+        }
+
+        inline char* PrintTo(char* dest, int maxLen) const {
+            snprintf(dest, maxLen, "%02X:%02X:%02X:%02X:%02X:%02X", m_Data[0], m_Data[1], m_Data[2], m_Data[3], m_Data[4], m_Data[5]);
+            return dest;
         }
 
     private:

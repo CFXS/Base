@@ -18,6 +18,7 @@
 // [CFXS] //
 #pragma once
 
+#include <cstdio>
 #include <CFXS/Base/ByteOrder.hpp>
 #include <CFXS/Base/Debug.hpp>
 #include <array>
@@ -47,7 +48,7 @@ namespace CFXS {
             return m_Value;
         }
 
-        inline bool IsValidNetmask() const {
+        inline bool IsValidSubnetMask() const {
             uint32_t mask = ToNetworkOrder();
             if (mask == 0)
                 return 0;
@@ -102,6 +103,11 @@ namespace CFXS {
         inline IPv4& operator=(const IPv4& other) {
             m_Value = other.m_Value;
             return *this;
+        }
+
+        inline char* PrintTo(char* dest, int maxLen) const {
+            snprintf(dest, maxLen, "%u.%u.%u.%u", m_Data[0], m_Data[1], m_Data[2], m_Data[3]);
+            return dest;
         }
 
     private:
