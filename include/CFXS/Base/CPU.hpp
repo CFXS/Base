@@ -20,5 +20,10 @@
 #include <cstddef>
 
 namespace CFXS::CPU {
-    extern const size_t CLOCK_FREQUENCY;
-}
+
+    static constexpr size_t CLOCK_FREQUENCY = CFXS_CPU_CLOCK_FREQUENCY;
+
+    void Delay_us(size_t us);
+    void Delay_ms(size_t ms);
+
+} // namespace CFXS::CPU
