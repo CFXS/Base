@@ -27,6 +27,13 @@ namespace CFXS::CPU {
 
     // TODO: platform specific template
     static __always_inline uint32_t GetCycleCount() { return (*(volatile uint32_t*)0xE0001004); }
+    static __always_inline void EnableInterrupts() { asm volatile("cpsie i"); };
+    static __always_inline void DisableInterrupts() { asm volatile("cpsid i"); };
+    static __always_inline bool AreInterruptsEnabled() {
+        uint32_t primask;
+        asm volatile("mrs %0, primask" : "=r"(primask));
+        return primask == 0;
+    }
 
     void Delay_us(size_t us);
     void Delay_ms(size_t ms);
