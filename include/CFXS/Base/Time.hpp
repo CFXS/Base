@@ -6,6 +6,7 @@ namespace CFXS {
 
     namespace Time {
         extern Time_t ms;
-    };
+        extern Time_t cycles;
+    }; // namespace Time
 
 } // namespace CFXS
