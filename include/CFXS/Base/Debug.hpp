@@ -1,6 +1,6 @@
 // ---------------------------------------------------------------------
 // CFXS Framework Base Module <https://github.com/CFXS/CFXS-Base>
-// Copyright (C) 2021 | CFXS / Rihards Veips
+// Copyright (C) 2022 | CFXS / Rihards Veips
 // 
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
