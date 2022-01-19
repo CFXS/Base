@@ -23,20 +23,24 @@
 #include <cstdio>
 
 #ifdef CFXS_DEBUG
-#define CFXS_BKPT() __bkpt
-#ifdef CFXS_DEBUG_ASSERT
-#define CFXS_ASSERT(condition, ...)                                     \
-    if (!(condition)) {                                                 \
-        printf(__DEBUG_TERMINAL_ERROR_COLOR__ "[ASSERT] " __VA_ARGS__); \
-        printf("\n"__DEBUG_TERMINAL_RESET_COLOR__);                     \
-        CFXS_BKPT();                                                    \
-    }
-#endif
+    #define CFXS_BREAK()     __bkpt
+    #define CFXS_printf(...) printf(__VA_ARGS__)
+    #ifdef CFXS_DEBUG_ASSERT
+        #define CFXS_ASSERT(condition, ...)                                     \
+            if (!(condition)) {                                                 \
+                printf(__DEBUG_TERMINAL_ERROR_COLOR__ "[ASSERT] " __VA_ARGS__); \
+                printf("\n"__DEBUG_TERMINAL_RESET_COLOR__);                     \
+                CFXS_BREAK();                                                   \
+            }
+    #endif
 #endif
 
 #ifndef CFXS_ASSERT
-#define CFXS_ASSERT(condition, ...)
+    #define CFXS_ASSERT(condition, ...)
 #endif
-#ifndef CFXS_BKPT
-#define CFXS_BKPT()
+#ifndef CFXS_BREAK
+    #define CFXS_BREAK()
+#endif
+#ifndef CFXS_printf
+    #define CFXS_printf(...)
 #endif
