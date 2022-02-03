@@ -31,7 +31,7 @@
     #define CFXS_BREAK()
 #endif
 #ifndef CFXS_printf
-    #define CFXS_printf(...)
+    #define CFXS_printf(...) printf(__VA_ARGS__)
 #endif
 
 #ifdef CFXS_DEBUG_ASSERT
