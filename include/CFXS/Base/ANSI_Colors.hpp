@@ -19,19 +19,19 @@
 #pragma once
 
 #ifdef CFXS_DEBUG_TERMINAL_USE_COLORS // [CFXSDEF:Base] Use ANSI escape sequences for terminal colors
-    #define __ANSI_RESET__   "\033[0m"
-    #define __ANSI_RED__     "\e[1;31m"
-    #define __ANSI_BLUE__    "\e[1;34m"
-    #define __ANSI_GREEN__   "\e[1;32m"
-    #define __ANSI_CYAN__    "\e[1;36m"
-    #define __ANSI_MAGENTA__ "\e[1;35m"
-    #define __ANSI_YELLOW__  "\e[1;33m"
+    #define ANSI_RESET   "\033[0m"
+    #define ANSI_RED     "\e[1;31m"
+    #define ANSI_BLUE    "\e[1;34m"
+    #define ANSI_GREEN   "\e[1;32m"
+    #define ANSI_CYAN    "\e[1;36m"
+    #define ANSI_MAGENTA "\e[1;35m"
+    #define ANSI_YELLOW  "\e[1;33m"
 #else
-    #define __ANSI_RESET__   ""
-    #define __ANSI_RED__     ""
-    #define __ANSI_BLUE__    ""
-    #define __ANSI_GREEN__   ""
-    #define __ANSI_CYAN__    ""
-    #define __ANSI_MAGENTA__ ""
-    #define __ANSI_YELLOW__  ""
+    #define ANSI_RESET   ""
+    #define ANSI_RED     ""
+    #define ANSI_BLUE    ""
+    #define ANSI_GREEN   ""
+    #define ANSI_CYAN    ""
+    #define ANSI_MAGENTA ""
+    #define ANSI_YELLOW  ""
 #endif

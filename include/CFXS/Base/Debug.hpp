@@ -35,15 +35,15 @@
 #endif
 
 #ifdef CFXS_DEBUG_ASSERT
-    #define CFXS_ASSERT(condition, ...)                                     \
-        if (!(condition)) {                                                 \
-            printf(__DEBUG_TERMINAL_ERROR_COLOR__ "[ASSERT] " __VA_ARGS__); \
-            printf("\n"__DEBUG_TERMINAL_RESET_COLOR__);                     \
-            CFXS_BREAK();                                                   \
+    #define CFXS_ASSERT(condition, ...)                                 \
+        if (!(condition)) {                                             \
+            printf(DEBUG_TERMINAL_ERROR_COLOR "[ASSERT] " __VA_ARGS__); \
+            printf("\n" DEBUG_TERMINAL_RESET_COLOR);                    \
+            CFXS_BREAK();                                               \
         }
-    #define CFXS_ERROR(...)                                            \
-        printf(__DEBUG_TERMINAL_ERROR_COLOR__ "[ERROR] " __VA_ARGS__); \
-        printf("\n"__DEBUG_TERMINAL_RESET_COLOR__);                    \
+    #define CFXS_ERROR(...)                                        \
+        printf(DEBUG_TERMINAL_ERROR_COLOR "[ERROR] " __VA_ARGS__); \
+        printf("\n" DEBUG_TERMINAL_RESET_COLOR);                   \
         CFXS_BREAK();
 #else
     #define CFXS_ASSERT(condition, ...)
