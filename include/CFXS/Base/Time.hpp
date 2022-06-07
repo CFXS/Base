@@ -23,7 +23,7 @@ namespace CFXS {
 
     namespace Time {
         extern volatile Time_t ms;
-        extern volatile Time_t cycles;
+        //extern volatile Time_t cycles;
     }; // namespace Time
 
 } // namespace CFXS
