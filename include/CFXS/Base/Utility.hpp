@@ -18,7 +18,13 @@
 // [CFXS] //
 #pragma once
 
-#define CFXS_IF_CALL(fn) \
-    if (fn) {            \
-        (fn)();          \
+namespace CFXS {
+
+    template<typename T>
+    constexpr void SafeCall(T fn) {
+        if (fn) {
+            fn();
+        }
     }
+
+} // namespace CFXS
