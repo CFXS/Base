@@ -27,6 +27,10 @@ namespace CFXS {
         }
     }
 
+    constexpr auto CreateBitMask(int bits) {
+        return (1 << bits) - 1;
+    }
+
 } // namespace CFXS
 
 #define CFXS_ENUM_OPERATORS(enumName)                                                                                       \
