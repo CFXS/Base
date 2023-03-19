@@ -32,6 +32,10 @@ namespace CFXS::Math {
         return expf(x * LOG_OF_10);
     }
 
+    inline Float_t Approx_Ratio_From_dB(Float_t x) {
+        return Approx_Pow10(x / 10.0f);
+    }
+
     inline Float_t Approx_Log2(Float_t x) {
         _FloatUnion_t &fl = *(_FloatUnion_t *)&x;
         fl.l &= ~_FLOAT_SIGN_BIT;
@@ -70,6 +74,12 @@ namespace CFXS::Math {
     float FixedToFloat(uint32_t input) {
         static_assert(FRACTIONAL_BITS > 0);
         return (static_cast<float>(input) / (1 << FRACTIONAL_BITS));
+    }
+
+    template<int FRACTIONAL_BITS, typename TARGET_TYPE = uint32_t>
+    TARGET_TYPE FloatToFixed(float input) {
+        static_assert(FRACTIONAL_BITS > 0);
+        return static_cast<TARGET_TYPE>(input * (1 << FRACTIONAL_BITS));
     }
 
 } // namespace CFXS::Math
