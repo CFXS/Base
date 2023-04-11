@@ -76,7 +76,7 @@ namespace CFXS::Math {
         return (static_cast<float>(input) / (1 << FRACTIONAL_BITS));
     }
 
-    template<int FRACTIONAL_BITS, typename TARGET_TYPE = uint32_t>
+    template<int FRACTIONAL_BITS, typename TARGET_TYPE = int>
     TARGET_TYPE FloatToFixed(float input) {
         static_assert(FRACTIONAL_BITS > 0);
         return static_cast<TARGET_TYPE>(input * (1 << FRACTIONAL_BITS));
