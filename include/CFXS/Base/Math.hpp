@@ -1,5 +1,7 @@
 #pragma once
 #include <cmath>
+#include <algorithm>
+#include <cstdint>
 
 namespace CFXS::Math {
 
@@ -28,14 +30,30 @@ namespace CFXS::Math {
         return powf(base, power);
     }
 
+    /// @brief Approximate 10^x
+    /// @param x power
+    /// @return 10^x
     inline Float_t Approx_Pow10(Float_t x) {
         return expf(x * LOG_OF_10);
     }
 
-    inline Float_t Approx_Ratio_From_dB(Float_t x) {
+    /// @brief dB to ratio (power scale)
+    /// @param x dB
+    /// @return ratio
+    inline Float_t Approx_Ratio_From_dB_Power(Float_t x) {
         return Approx_Pow10(x / 10.0f);
     }
 
+    /// @brief dB to ratio (voltage scale)
+    /// @param x dB
+    /// @return ratio
+    inline Float_t Approx_Ratio_From_dB_Voltage(Float_t x) {
+        return Approx_Pow10(x / 20.0f);
+    }
+
+    /// @brief Approximate log2
+    /// @param x value
+    /// @return log2(value)
     inline Float_t Approx_Log2(Float_t x) {
         _FloatUnion_t &fl = *(_FloatUnion_t *)&x;
         fl.l &= ~_FLOAT_SIGN_BIT;
@@ -58,28 +76,90 @@ namespace CFXS::Math {
     //  - Speed increase: 9.07x (test sample size - 1M)
     //  - Precision: +- 0.001
 
+    /// @brief Approximate log10
+    /// @param x value
+    /// @return log10(value)
     inline Float_t Approx_Log10(Float_t x) {
         return Approx_Log2(x) * LOG2_OF_10;
     }
 
+    /// @brief Ratio to approximated dB (power scale)
+    /// @param x ratio
+    /// @return dB
     inline Float_t Approx_Power_dB(Float_t x) {
         return Approx_Log2(x) * LOG2_OF_10 * 10;
     }
 
+    /// @brief Ratio to approximated dB (voltage scale)
+    /// @param x ratio
+    /// @return dB
     inline Float_t Approx_Voltage_dB(Float_t x) {
         return Approx_Log2(x) * LOG2_OF_10 * 20;
     }
 
+    /// @brief Convert fixed point number to floating point
+    /// @tparam FRACTIONAL_BITS number of fractional bits
+    /// @param input fixed point value
+    /// @return floating point value
     template<int FRACTIONAL_BITS>
     float FixedToFloat(uint32_t input) {
         static_assert(FRACTIONAL_BITS > 0);
         return (static_cast<float>(input) / (1 << FRACTIONAL_BITS));
     }
 
-    template<int FRACTIONAL_BITS, typename TARGET_TYPE = uint32_t>
+    /// @brief Convert floating point value to fixed point
+    /// @tparam TARGET_TYPE output value type (default = int)
+    /// @tparam FRACTIONAL_BITS number of fractional bits
+    /// @param input input value
+    /// @return fixed point value
+    template<int FRACTIONAL_BITS, typename TARGET_TYPE = int>
     TARGET_TYPE FloatToFixed(float input) {
         static_assert(FRACTIONAL_BITS > 0);
         return static_cast<TARGET_TYPE>(input * (1 << FRACTIONAL_BITS));
+    }
+
+    /// @brief Remap one number range to another
+    /// @tparam T value type
+    /// @param x input
+    /// @param in_min input low bound
+    /// @param in_max input high bound
+    /// @param out_min output low bound
+    /// @param out_max output high bound
+    /// @return remapped value
+    template<typename T>
+    inline T Map(T x, T in_min, T in_max, T out_min, T out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    /// @brief Remap one number range to another
+    /// @param x input
+    /// @param in_min input low bound
+    /// @param in_max input high bound
+    /// @param out_min output low bound
+    /// @param out_max output high bound
+    /// @return remapped value
+    inline Float_t Map(Float_t x, Float_t in_min, Float_t in_max, Float_t out_min, Float_t out_max) {
+        return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+    }
+
+    /// @brief Clamp value to range
+    /// @tparam T value type
+    /// @param x value
+    /// @param low range low bound
+    /// @param high range high bound
+    /// @return clamped value
+    template<typename T>
+    inline T Clamp(T x, T low, T high) {
+        return std::clamp<T>(x, low, high);
+    }
+
+    template<typename T>
+    inline T ClampMap(T x, T in_min, T in_max, T out_min, T out_max) {
+        return Clamp<T>(Map<T>(x, in_min, in_max, out_min, out_max), out_min, out_max);
+    }
+
+    inline Float_t ClampMap(Float_t x, Float_t in_min, Float_t in_max, Float_t out_min, Float_t out_max) {
+        return Clamp<Float_t>(Map<Float_t>(x, in_min, in_max, out_min, out_max), out_min, out_max);
     }
 
 } // namespace CFXS::Math
