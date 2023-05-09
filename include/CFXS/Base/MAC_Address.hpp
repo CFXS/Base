@@ -1,17 +1,17 @@
 // ---------------------------------------------------------------------
 // CFXS Framework Base Module <https://github.com/CFXS/CFXS-Base>
 // Copyright (C) 2022 | CFXS / Rihards Veips
-// 
+//
 // This program is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-// 
+//
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
-// 
+//
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>
 // ---------------------------------------------------------------------
@@ -36,10 +36,46 @@ namespace CFXS {
         constexpr MAC_Address(const MAC_Address& other) : m_Data(other.m_Data) {
         }
 
+        /// @brief Construct MAC address from string
+        /// @param mac_string "12:34:56:AB:CD:EF"
+        template<size_t N>
+        constexpr MAC_Address(const char (&mac_string)[N]) : m_Data({0, 0, 0, 0, 0, 0}) {
+            int idx = 0;
+            int loc = 0;
+            for (int i = 0; i < N; i++) {
+                char ch = mac_string[i];
+
+                if (ch == ':') {
+                    idx++;
+                    loc = 0;
+                    continue;
+                }
+
+                if (loc < 2) {
+                    if (ch >= '0' && ch <= '9') {
+                        int val = ch - '0';
+                        m_Data[idx] += loc & 1 ? val : (val << 4);
+                    } else if (ch >= 'a' && ch <= 'f') {
+                        int val = (ch - 'a') + 10;
+                        m_Data[idx] += loc & 1 ? val : (val << 4);
+                    } else if (ch >= 'A' && ch <= 'F') {
+                        int val = (ch - 'A') + 10;
+                        m_Data[idx] += loc & 1 ? val : (val << 4);
+                    }
+                }
+
+                loc++;
+            }
+        }
+
+        /// @brief Get raw data pointer
+        /// @return Raw data pointer
         constexpr uint8_t* GetDataPointer() {
             return m_Data.data();
         }
 
+        /// @brief Get raw data pointer
+        /// @return Raw data pointer
         constexpr const uint8_t* GetDataPointer() const {
             return m_Data.data();
         }
@@ -65,6 +101,10 @@ namespace CFXS {
             return *this;
         }
 
+        /// @brief Print formatted string to buffer
+        /// @param dest Buffer to print to
+        /// @param maxLen Max buffer size
+        /// @return Printed end pointer
         inline char* PrintTo(char* dest, int maxLen) const {
             snprintf(dest, maxLen, "%02X:%02X:%02X:%02X:%02X:%02X", m_Data[0], m_Data[1], m_Data[2], m_Data[3], m_Data[4], m_Data[5]);
             return dest;

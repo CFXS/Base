@@ -49,3 +49,18 @@
     #define CFXS_ASSERT(condition, ...)
     #define CFXS_ERROR(...)
 #endif
+
+// Generic debug level masks
+namespace CFXS {
+
+    using DebugLevel_t = uint8_t;
+
+    struct DebugLevel {
+        static constexpr DebugLevel_t TRACE    = 1;
+        static constexpr DebugLevel_t INFO     = 2;
+        static constexpr DebugLevel_t WARNING  = 3;
+        static constexpr DebugLevel_t ERROR    = 4;
+        static constexpr DebugLevel_t CRITICAL = 5;
+    };
+
+} // namespace CFXS
