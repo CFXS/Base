@@ -70,18 +70,18 @@ namespace CFXS {
 
         /// @brief Get raw data pointer
         /// @return Raw data pointer
-        constexpr uint8_t* GetDataPointer() {
+        constexpr uint8_t* GetRawData() {
             return m_Data.data();
         }
 
         /// @brief Get raw data pointer
         /// @return Raw data pointer
-        constexpr const uint8_t* GetDataPointer() const {
+        constexpr const uint8_t* GetRawData() const {
             return m_Data.data();
         }
 
         inline bool operator==(const MAC_Address& other) const {
-            return memcmp(GetDataPointer(), other.GetDataPointer(), 6) == 0;
+            return memcmp(GetRawData(), other.GetRawData(), 6) == 0;
         }
 
         inline bool operator!=(const MAC_Address& other) const {
