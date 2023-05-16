@@ -27,9 +27,18 @@ namespace CFXS {
 
     class IPv4 {
     public:
+        struct NETWORK_ORDER {};
+
+    public:
         constexpr IPv4() : m_Value(0) {
         }
-        constexpr IPv4(uint32_t val) : m_Value(HTONL(val)) {
+        constexpr IPv4(uint32_t val) :
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+            m_Value(val)
+#else
+            m_Value(HTONL(val))
+#endif
+        {
         }
         constexpr IPv4(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4) :
 #if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__

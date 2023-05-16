@@ -59,6 +59,7 @@ namespace CFXS {
     using DebugLevel_t = uint8_t;
 
     struct DebugLevel {
+        static constexpr DebugLevel_t SPAM     = 0;
         static constexpr DebugLevel_t TRACE    = 1;
         static constexpr DebugLevel_t INFO     = 2;
         static constexpr DebugLevel_t WARNING  = 3;
