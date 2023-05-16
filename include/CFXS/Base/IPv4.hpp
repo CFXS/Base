@@ -29,9 +29,50 @@ namespace CFXS {
     public:
         constexpr IPv4() : m_Value(0) {
         }
-        constexpr IPv4(uint32_t val) : m_Value(val) {
+        constexpr IPv4(uint32_t val) : m_Value(HTONL(val)) {
         }
-        constexpr IPv4(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4) : m_Data{oct1, oct2, oct3, oct4} {
+        constexpr IPv4(uint8_t oct1, uint8_t oct2, uint8_t oct3, uint8_t oct4) :
+#if __BYTE_ORDER__ == __ORDER_LITTLE_ENDIAN__
+            m_Data{oct1, oct2, oct3, oct4}
+#else
+            m_Data{oct4, oct3, oct2, oct1}
+#endif
+        {
+        }
+        template<size_t N>
+        constexpr IPv4(const char (&ip_string)[N]) : m_Value(0) {
+            int octet       = 0;
+            int num         = 0;
+            uint8_t nums[3] = {0, 0, 0};
+            for (int i = 0; i <= N; i++) {
+                if (i == N || ip_string[i] == '.') {
+                    if (num == 1) {
+                        m_Data[octet] += nums[0];
+                    } else if (num == 2) {
+                        m_Data[octet] += nums[1] + nums[0] * 10;
+                    } else if (num == 3) {
+                        m_Data[octet] += nums[2] + nums[1] * 10 + nums[0] * 100;
+                    }
+
+                    octet++;
+
+                    if (i == N || octet == 4) {
+                        return;
+                    }
+
+                    num     = 0;
+                    nums[0] = 0;
+                    nums[1] = 0;
+                    nums[2] = 0;
+                } else {
+                    if (ip_string[i] >= '0' && ip_string[i] <= '9') {
+                        nums[num] = ip_string[i] - '0';
+                        num++;
+                        if (num > 3)
+                            num = 3;
+                    }
+                }
+            }
         }
         constexpr IPv4(const IPv4& other) : m_Value(other.m_Value) {
         }
@@ -44,7 +85,7 @@ namespace CFXS {
             return IPv4{0x00000000};
         }
 
-        constexpr uint32_t ToNetworkOrder() const {
+        constexpr uint32_t ToHostOrder() const {
             return HTONL(m_Value);
         }
 
@@ -52,8 +93,13 @@ namespace CFXS {
             return m_Value;
         }
 
+        template<typename T>
+        constexpr const T* GetPointerCast() const {
+            return reinterpret_cast<const T*>(&m_Value);
+        }
+
         inline bool IsValidSubnetMask() const {
-            uint32_t mask = ToNetworkOrder();
+            uint32_t mask = GetValue();
             if (mask == 0)
                 return 0;
             if (mask & (~mask >> 1)) {
@@ -110,7 +156,7 @@ namespace CFXS {
         }
 
         inline char* PrintTo(char* dest, int maxLen) const {
-            snprintf(dest, maxLen, "%u.%u.%u.%u", m_Data[0], m_Data[1], m_Data[2], m_Data[3]);
+            snprintf(dest, maxLen, "%u.%u.%u.%u", this->operator[](0), this->operator[](1), this->operator[](2), this->operator[](3));
             return dest;
         }
 

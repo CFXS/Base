@@ -50,6 +50,9 @@
     #define CFXS_ERROR(...)
 #endif
 
+#define CFXS_REVERSE_ASSERT(message, condition) CFXS_ASSERT(condition, message)
+
+#ifdef __cplusplus
 // Generic debug level masks
 namespace CFXS {
 
@@ -64,3 +67,4 @@ namespace CFXS {
     };
 
 } // namespace CFXS
+#endif
