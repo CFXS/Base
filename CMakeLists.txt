@@ -20,6 +20,10 @@ target_precompile_headers(
   <stdint.h>
   <stdbool.h>
   <string.h>
+  <eastl/array.h>
+  <eastl/algorithm.h>
+  <eastl/numeric_limits.h>
 )
 
 target_link_libraries(${LIBRARY_NAME} PRIVATE CFXS_Toolchain)
+target_link_libraries(${LIBRARY_NAME} PRIVATE CFXS_Platform)

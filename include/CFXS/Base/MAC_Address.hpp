@@ -18,7 +18,6 @@
 // [CFXS] //
 #pragma once
 
-#include <array>
 #include <cstring>
 
 namespace CFXS {
@@ -111,7 +110,7 @@ namespace CFXS {
         }
 
     private:
-        std::array<uint8_t, 6> m_Data;
+        eastl::array<uint8_t, 6> m_Data;
     };
 
 } // namespace CFXS

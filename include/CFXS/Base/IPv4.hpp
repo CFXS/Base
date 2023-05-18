@@ -21,7 +21,6 @@
 #include <cstdio>
 #include <CFXS/Base/ByteOrder.hpp>
 #include <CFXS/Base/Debug.hpp>
-#include <array>
 
 namespace CFXS {
 
@@ -171,7 +170,7 @@ namespace CFXS {
 
     private:
         union {
-            std::array<uint8_t, 4> m_Data;
+            eastl::array<uint8_t, 4> m_Data;
             uint32_t m_Value;
         };
     };

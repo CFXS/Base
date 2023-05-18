@@ -1,6 +1,5 @@
 #pragma once
 #include <cmath>
-#include <algorithm>
 #include <cstdint>
 
 namespace CFXS::Math {
@@ -24,6 +23,18 @@ namespace CFXS::Math {
 
     inline Float_t Cos(Float_t x) {
         return cosf(x);
+    }
+
+    inline int Pow_Integer(int b, int e) {
+        if (e == 0)
+            return 1;
+
+        uint32_t value = b;
+        for (int i = 1; i < e; i++) {
+            value *= b;
+        }
+
+        return value;
     }
 
     inline Float_t Pow(Float_t base, Float_t power) {
@@ -150,7 +161,7 @@ namespace CFXS::Math {
     /// @return clamped value
     template<typename T>
     inline T Clamp(T x, T low, T high) {
-        return std::clamp<T>(x, low, high);
+        return eastl::clamp<T>(x, low, high);
     }
 
     template<typename T>
@@ -160,6 +171,10 @@ namespace CFXS::Math {
 
     inline Float_t ClampMap(Float_t x, Float_t in_min, Float_t in_max, Float_t out_min, Float_t out_max) {
         return Clamp<Float_t>(Map<Float_t>(x, in_min, in_max, out_min, out_max), out_min, out_max);
+    }
+
+    inline auto Square(auto x) {
+        return x * x;
     }
 
 } // namespace CFXS::Math
