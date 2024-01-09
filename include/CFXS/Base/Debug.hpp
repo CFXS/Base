@@ -20,7 +20,8 @@
 
 #include "ANSI_Colors.hpp"
 #include "DebugTerminal.hpp"
-#include <stdio.h>
+#include <cstdio>
+#include <cstdint>
 
 #ifdef CFXS_DEBUG
     #define CFXS_BREAK()     __bkpt

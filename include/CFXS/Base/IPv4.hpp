@@ -19,7 +19,7 @@
 #pragma once
 
 #include <cstdio>
-#include <eastl/array.hpp>
+#include <EASTL/array.h>
 #include <CFXS/Base/ByteOrder.hpp>
 #include <CFXS/Base/Debug.hpp>
 
