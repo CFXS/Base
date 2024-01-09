@@ -1,0 +1,7 @@
+printf("Load CFXS-Base")
+cfxs_base = create_library("CFXS Base")
+cfxs_base:add_include_paths("public", "./include")
+cfxs_base:add_sources({
+    "./src/**.c",
+    "./src/**.cpp"
+})
