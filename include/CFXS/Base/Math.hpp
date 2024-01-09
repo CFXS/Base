@@ -1,6 +1,7 @@
 #pragma once
 #include <cmath>
 #include <cstdint>
+#include <EASTL/algorithm.h>
 
 namespace CFXS::Math {
 
